@@ -1,0 +1,41 @@
+<svg viewBox="0 0 1000 270" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Forward and backward pass in gradient-based training</title>
+<desc>Inputs flow forward through a parameterized model to produce predictions, which are compared to targets by a loss function. Backpropagation then computes gradients of the loss with respect to the parameters and flows backward to update them.</desc>
+<defs>
+<marker id="arrow-dl-fwd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#3f6a92"/>
+</marker>
+<marker id="arrow-dl-bwd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#3f6a92"/>
+</marker>
+</defs>
+<rect width="1000" height="270" fill="#ffffff"/>
+
+<!-- Forward pass: tint boxes -->
+<rect x="40" y="50" width="170" height="90" rx="10" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="125" y="90" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#1d4e89" font-weight="700" text-anchor="middle">Inputs</text>
+<text x="125" y="112" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#3f6a92" text-anchor="middle">x</text>
+
+<rect x="270" y="50" width="210" height="90" rx="10" fill="#dceaf7" stroke="#1d4e89" stroke-width="2.5"/>
+<text x="375" y="90" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#1d4e89" font-weight="700" text-anchor="middle">Model</text>
+<text x="375" y="112" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#3f6a92" text-anchor="middle">f&#952;(x), parameters &#952;</text>
+
+<rect x="540" y="50" width="180" height="90" rx="10" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="630" y="90" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#1d4e89" font-weight="700" text-anchor="middle">Predictions</text>
+<text x="630" y="112" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#3f6a92" text-anchor="middle">&#375;</text>
+
+<!-- Loss: the hero, pivot between forward and backward -->
+<rect x="800" y="50" width="160" height="90" rx="10" fill="#1d4e89"/>
+<text x="880" y="90" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#ffffff" font-weight="700" text-anchor="middle">Loss</text>
+<text x="880" y="112" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#dceaf7" text-anchor="middle">L(&#375;, y)</text>
+
+<!-- Forward arrows -->
+<line x1="210" y1="95" x2="265" y2="95" stroke="#3f6a92" stroke-width="2.25" marker-end="url(#arrow-dl-fwd)"/>
+<line x1="480" y1="95" x2="535" y2="95" stroke="#3f6a92" stroke-width="2.25" marker-end="url(#arrow-dl-fwd)"/>
+<line x1="720" y1="95" x2="795" y2="95" stroke="#3f6a92" stroke-width="2.25" marker-end="url(#arrow-dl-fwd)"/>
+<text x="500" y="80" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d4e89" font-weight="700" text-anchor="middle">forward pass</text>
+
+<!-- Backward pass: dashed arc back to the model -->
+<path d="M 880 140 C 880 210 375 210 375 140" fill="none" stroke="#a9c3dc" stroke-width="2.25" stroke-dasharray="7 5" marker-end="url(#arrow-dl-bwd)"/>
+<text x="627" y="235" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#557591" font-style="italic" text-anchor="middle">backprop: gradients &#8706;L/&#8706;&#952; flow back and update &#952;</text>
+</svg>

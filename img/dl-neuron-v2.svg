@@ -1,0 +1,47 @@
+<svg viewBox="0 0 620 310" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>A single artificial neuron</title>
+<desc>Three inputs, each multiplied by a weight, are summed together with a bias, and the sum is passed through a nonlinear activation function (ReLU) to produce the neuron's output.</desc>
+<defs>
+<marker id="arrow-dl-neuron" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#3f6a92"/>
+</marker>
+</defs>
+<rect width="620" height="310" fill="#ffffff"/>
+
+<!-- Sum node, activation node, output: drawn first so arrowheads sit on top of their edges -->
+<circle cx="300" cy="170" r="42" fill="#dceaf7" stroke="#1d4e89" stroke-width="2"/>
+<text x="300" y="181" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d4e89" font-weight="700" text-anchor="middle">&#931;</text>
+
+<circle cx="430" cy="170" r="38" fill="#dceaf7" stroke="#1d4e89" stroke-width="2"/>
+<text x="430" y="176" font-family="Helvetica, Arial, sans-serif" font-size="14.5" fill="#1d4e89" font-weight="700" text-anchor="middle">ReLU</text>
+
+<circle cx="550" cy="170" r="34" fill="#1d4e89"/>
+<text x="550" y="178" font-family="Helvetica, Arial, sans-serif" font-size="19" fill="#ffffff" font-weight="700" text-anchor="middle">y</text>
+
+<!-- Input lines, ending precisely at the sum node's edge -->
+<line x1="60" y1="80" x2="261" y2="155" stroke="#3f6a92" stroke-width="2" marker-end="url(#arrow-dl-neuron)"/>
+<line x1="60" y1="170" x2="258" y2="170" stroke="#3f6a92" stroke-width="2" marker-end="url(#arrow-dl-neuron)"/>
+<line x1="60" y1="260" x2="261" y2="185" stroke="#3f6a92" stroke-width="2" marker-end="url(#arrow-dl-neuron)"/>
+
+<!-- Bias arrow into the sum node -->
+<line x1="300" y1="70" x2="300" y2="128" stroke="#3f6a92" stroke-width="2" marker-end="url(#arrow-dl-neuron)"/>
+
+<!-- Sum -> activation -> output -->
+<line x1="342" y1="170" x2="392" y2="170" stroke="#3f6a92" stroke-width="2" marker-end="url(#arrow-dl-neuron)"/>
+<line x1="468" y1="170" x2="516" y2="170" stroke="#3f6a92" stroke-width="2" marker-end="url(#arrow-dl-neuron)"/>
+
+<!-- Input and weight labels -->
+<text x="50" y="80" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1d4e89" text-anchor="end">x&#8321;</text>
+<text x="50" y="175" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1d4e89" text-anchor="end">x&#8322;</text>
+<text x="50" y="265" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1d4e89" text-anchor="end">x&#8323;</text>
+
+<text x="150" y="106" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#3f6a92" font-style="italic" text-anchor="middle">w&#8321;</text>
+<text x="159" y="158" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#3f6a92" font-style="italic" text-anchor="middle">w&#8322;</text>
+<text x="150" y="240" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#3f6a92" font-style="italic" text-anchor="middle">w&#8323;</text>
+<text x="320" y="103" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#3f6a92" font-style="italic" text-anchor="start">b</text>
+
+<!-- Stage captions -->
+<text x="300" y="234" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#557591" font-style="italic" text-anchor="middle">weighted sum + bias</text>
+<text x="430" y="230" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#557591" font-style="italic" text-anchor="middle">activation</text>
+<text x="550" y="226" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#557591" font-style="italic" text-anchor="middle">output</text>
+</svg>

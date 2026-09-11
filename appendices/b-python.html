@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Appendix B — Python and API basics – AI Agents — Appendices</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../appendices/c-deeplearning.html" rel="next">
+<link href="../appendices/a-setup.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-efa4ae438396d7ce58f0c12de823036a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/a-setup.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/b-python.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python and API basics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">AI Agents — Appendices</a> 
+        <div class="sidebar-tools-main">
+    <a href="../appendices.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/a-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Python Setup</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/b-python.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python and API basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/c-deeplearning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Deep learning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#python-as-an-interpreted-language" id="toc-python-as-an-interpreted-language" class="nav-link active" data-scroll-target="#python-as-an-interpreted-language"><span class="header-section-number">B.1</span> Python as an interpreted language</a></li>
+  <li><a href="#working-environments" id="toc-working-environments" class="nav-link" data-scroll-target="#working-environments"><span class="header-section-number">B.2</span> Working environments</a></li>
+  <li><a href="#language-fundamentals" id="toc-language-fundamentals" class="nav-link" data-scroll-target="#language-fundamentals"><span class="header-section-number">B.3</span> Language fundamentals</a>
+  <ul class="collapse">
+  <li><a href="#getting-help-interactively" id="toc-getting-help-interactively" class="nav-link" data-scroll-target="#getting-help-interactively"><span class="header-section-number">B.3.1</span> Getting help interactively</a></li>
+  <li><a href="#variables-and-basic-data-types" id="toc-variables-and-basic-data-types" class="nav-link" data-scroll-target="#variables-and-basic-data-types"><span class="header-section-number">B.3.2</span> Variables and basic data types</a></li>
+  <li><a href="#type-hints" id="toc-type-hints" class="nav-link" data-scroll-target="#type-hints"><span class="header-section-number">B.3.3</span> Type hints</a></li>
+  <li><a href="#strings-and-formatting" id="toc-strings-and-formatting" class="nav-link" data-scroll-target="#strings-and-formatting"><span class="header-section-number">B.3.4</span> Strings and formatting</a></li>
+  <li><a href="#collections-and-indexing" id="toc-collections-and-indexing" class="nav-link" data-scroll-target="#collections-and-indexing"><span class="header-section-number">B.3.5</span> Collections and indexing</a></li>
+  <li><a href="#unpacking-with-and" id="toc-unpacking-with-and" class="nav-link" data-scroll-target="#unpacking-with-and"><span class="header-section-number">B.3.6</span> Unpacking with <code>*</code> and <code>**</code></a></li>
+  <li><a href="#comprehensions" id="toc-comprehensions" class="nav-link" data-scroll-target="#comprehensions"><span class="header-section-number">B.3.7</span> Comprehensions</a></li>
+  </ul></li>
+  <li><a href="#control-structures" id="toc-control-structures" class="nav-link" data-scroll-target="#control-structures"><span class="header-section-number">B.4</span> Control structures</a></li>
+  <li><a href="#functions-and-modules" id="toc-functions-and-modules" class="nav-link" data-scroll-target="#functions-and-modules"><span class="header-section-number">B.5</span> Functions and modules</a>
+  <ul class="collapse">
+  <li><a href="#decorators" id="toc-decorators" class="nav-link" data-scroll-target="#decorators"><span class="header-section-number">B.5.1</span> Decorators</a></li>
+  <li><a href="#a-note-on-async-and-await" id="toc-a-note-on-async-and-await" class="nav-link" data-scroll-target="#a-note-on-async-and-await"><span class="header-section-number">B.5.2</span> A note on <code>async</code> and <code>await</code></a></li>
+  </ul></li>
+  <li><a href="#error-handling" id="toc-error-handling" class="nav-link" data-scroll-target="#error-handling"><span class="header-section-number">B.6</span> Error handling</a></li>
+  <li><a href="#classes-and-structured-data" id="toc-classes-and-structured-data" class="nav-link" data-scroll-target="#classes-and-structured-data"><span class="header-section-number">B.7</span> Classes and structured data</a>
+  <ul class="collapse">
+  <li><a href="#data-classes-and-pydantic-models" id="toc-data-classes-and-pydantic-models" class="nav-link" data-scroll-target="#data-classes-and-pydantic-models"><span class="header-section-number">B.7.1</span> Data classes and Pydantic models</a></li>
+  </ul></li>
+  <li><a href="#working-with-json" id="toc-working-with-json" class="nav-link" data-scroll-target="#working-with-json"><span class="header-section-number">B.8</span> Working with JSON</a></li>
+  <li><a href="#calling-web-apis-from-python" id="toc-calling-web-apis-from-python" class="nav-link" data-scroll-target="#calling-web-apis-from-python"><span class="header-section-number">B.9</span> Calling web APIs from Python</a>
+  <ul class="collapse">
+  <li><a href="#http-methods-and-status-codes" id="toc-http-methods-and-status-codes" class="nav-link" data-scroll-target="#http-methods-and-status-codes"><span class="header-section-number">B.9.1</span> HTTP methods and status codes</a></li>
+  <li><a href="#urls-and-query-parameters" id="toc-urls-and-query-parameters" class="nav-link" data-scroll-target="#urls-and-query-parameters"><span class="header-section-number">B.9.2</span> URLs and query parameters</a></li>
+  <li><a href="#the-requests-library" id="toc-the-requests-library" class="nav-link" data-scroll-target="#the-requests-library"><span class="header-section-number">B.9.3</span> The <code>requests</code> library</a></li>
+  <li><a href="#authentication-and-secrets" id="toc-authentication-and-secrets" class="nav-link" data-scroll-target="#authentication-and-secrets"><span class="header-section-number">B.9.4</span> Authentication and secrets</a></li>
+  <li><a href="#pagination" id="toc-pagination" class="nav-link" data-scroll-target="#pagination"><span class="header-section-number">B.9.5</span> Pagination</a></li>
+  </ul></li>
+  <li><a href="#building-apis-in-python" id="toc-building-apis-in-python" class="nav-link" data-scroll-target="#building-apis-in-python"><span class="header-section-number">B.10</span> Building APIs in Python</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/a-setup.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/b-python.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python and API basics</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Appendix B — Python and API basics</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This appendix is a reference, not a full Python course. Its goal is narrow: enough Python to read, run, and adapt the code listings in this book, and enough about web APIs and JSON to follow the tool-calling, retrieval, and orchestration examples that depend on them. Coverage is deliberately shaped by what the book’s own code actually uses, rather than by a generic language tour — constructs that never appear in a listing (e.g., operator overloading, metaclasses) are left out, while constructs that recur throughout (type hints, dictionaries that mirror JSON, decorators, <code>try</code>/<code>except</code>) get dedicated treatment. For installing Python and the packages used in this book, see <a href="a-setup.html" class="quarto-xref"><span>Appendix A</span></a>.</p>
+<section id="python-as-an-interpreted-language" class="level2" data-number="B.1">
+<h2 data-number="B.1" class="anchored" data-anchor-id="python-as-an-interpreted-language"><span class="header-section-number">B.1</span> Python as an interpreted language</h2>
+<p>Python is commonly described as an interpreted language. In practice, a typical implementation (CPython) compiles source code into bytecode, which is then executed by a virtual machine. The operational consequence is that programs can be run interactively, executed incrementally, and developed with short edit-run cycles — the same code cell can be re-run after a small edit without a separate build step.</p>
+<p>Compiled language toolchains translate source code into machine code before execution. This separation frequently enables stronger ahead-of-time optimization and reduces runtime overhead, but it also changes the development workflow: compilation becomes a distinct build step, and interactive execution requires additional infrastructure.</p>
+</section>
+<section id="working-environments" class="level2" data-number="B.2">
+<h2 data-number="B.2" class="anchored" data-anchor-id="working-environments"><span class="header-section-number">B.2</span> Working environments</h2>
+<p>Python programs are commonly written and executed in an integrated development environment (IDE), or in notebook systems that combine code and narrative text — the format used throughout this book.</p>
+<p>Jupyter Notebook environments are frequently used for exploratory work, reproducible analyses, and documentation that interleaves prose with executable code. Notebook execution is stateful: cells can be executed out of order, which makes it necessary to manage dependencies between cells explicitly when producing reproducible results. Every executable listing in this book is a notebook cell in exactly this sense: later cells assume that earlier cells in the same chapter have already run.</p>
+<p>For projects that involve multiple files and larger codebases, an IDE often provides stronger navigation, refactoring support, and debugging capabilities. A practical workflow uses notebooks for experimentation and moves stable components into modules that can be imported in both notebooks and scripts.</p>
+</section>
+<section id="language-fundamentals" class="level2" data-number="B.3">
+<h2 data-number="B.3" class="anchored" data-anchor-id="language-fundamentals"><span class="header-section-number">B.3</span> Language fundamentals</h2>
+<p>Python is case-sensitive, uses indentation to structure blocks, and is dynamically typed. Dynamic typing means that the type of a variable is associated with the runtime value rather than with an explicit declaration.</p>
+<p>Indentation is part of the syntax and replaces block delimiters such as braces. A consistent indentation style is required, since inconsistent indentation can cause syntax errors and subtle behavioral changes.</p>
+<section id="getting-help-interactively" class="level3" data-number="B.3.1">
+<h3 data-number="B.3.1" class="anchored" data-anchor-id="getting-help-interactively"><span class="header-section-number">B.3.1</span> Getting help interactively</h3>
+<p>The built-in functions <code>help()</code> and <code>dir()</code> provide documentation and introspection information in interactive sessions.</p>
+<div id="5b1d14ad" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(<span class="bu">abs</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(<span class="bu">str</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="variables-and-basic-data-types" class="level3" data-number="B.3.2">
+<h3 data-number="B.3.2" class="anchored" data-anchor-id="variables-and-basic-data-types"><span class="header-section-number">B.3.2</span> Variables and basic data types</h3>
+<p>Variables bind names to objects. Assignments introduce or update a binding, and the runtime determines the type from the assigned value.</p>
+<div id="56d1235c" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="st">"Hello"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Basic data types include integers, floating-point numbers, Booleans, strings, and the special value <code>None</code>. <code>None</code> is Python’s explicit absence-of-a-value marker and appears constantly in this book’s code wherever a field is optional — a tool argument that was not supplied, a cache lookup that missed, a step that produced no result.</p>
+<div id="f2db123f" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> <span class="fl">3.14</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>flag <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Python"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>missing <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(x), <span class="bu">type</span>(text), <span class="bu">type</span>(missing)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Identity testing with <code>is</code> is distinct from equality testing. Identity checks whether two references point to the same object; <code>is None</code> is the idiomatic way to test for absence, preferred over <code>== None</code>. Type checks are usually expressed with <code>isinstance</code>.</p>
+<div id="0f43b77a" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fl">3.14</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">isinstance</span>(x, <span class="bu">float</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="type-hints" class="level3" data-number="B.3.3">
+<h3 data-number="B.3.3" class="anchored" data-anchor-id="type-hints"><span class="header-section-number">B.3.3</span> Type hints</h3>
+<p>Type hints annotate variables, function parameters, and return values with the type they are expected to hold. The interpreter does not enforce them at runtime; they exist for readers, editors, and separate static-analysis tools. This book’s function signatures use them throughout, because a hinted signature documents a tool’s or a function’s contract without requiring a separate specification.</p>
+<div id="9a8fc8c9" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add(x: <span class="bu">int</span>, y: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">+</span> y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Container types are parameterized with the type of their elements or entries: <code>list[str]</code> is a list of strings, <code>dict[str, float]</code> maps strings to floats. <code>Optional[str]</code> (or, equivalently, <code>str | None</code>) marks a value that may be absent.</p>
+<div id="cc7017b5" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Optional</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lookup_price(item: <span class="bu">str</span>, catalog: <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">float</span>]) <span class="op">-&gt;</span> Optional[<span class="bu">float</span>]:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> catalog.get(item)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="strings-and-formatting" class="level3" data-number="B.3.4">
+<h3 data-number="B.3.4" class="anchored" data-anchor-id="strings-and-formatting"><span class="header-section-number">B.3.4</span> Strings and formatting</h3>
+<p>Strings are sequences of Unicode characters. Indexing and slicing operations produce substrings without modifying the original value.</p>
+<div id="a1321225" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="st">"Alice"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>name[<span class="dv">0</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>name[<span class="dv">1</span>:<span class="dv">4</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>An f-string (formatted string literal) embeds expressions inside string templates. This is the dominant way this book constructs prompts and formats output, since it keeps the template and the interpolated values in one readable line.</p>
+<div id="fb1e20e9" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="st">"Alice"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>age <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>msg <span class="op">=</span> <span class="ss">f"Name: </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">, age: </span><span class="sc">{</span>age<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>msg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a2729573" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> <span class="fl">19.99</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>qty <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> price <span class="op">*</span> qty</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ss">f"Total: </span><span class="sc">{</span>total<span class="sc">:.2f}</span><span class="ss">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A handful of string methods account for most of the text handling in this book’s code: <code>.split()</code> breaks a string into a list on whitespace or a given separator, <code>.join()</code> is the reverse, concatenating a list of strings with a separator between them, <code>.strip()</code> removes leading and trailing whitespace, <code>.lower()</code> normalizes case for comparison, and <code>.startswith()</code> tests a prefix.</p>
+<div id="45c7d26c" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>line <span class="op">=</span> <span class="st">"  §4.2 Refunds are issued within 5 business days  "</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>line.strip().lower().startswith(<span class="st">"§4.2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="121d8e27" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>parts <span class="op">=</span> <span class="st">"policy,refund,shipping"</span>.split(<span class="st">","</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">", "</span>.join(parts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise: strings
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create <code>sentence = "I am learning Python"</code>. Compute its length, extract the substring <code>"Python"</code> via slicing, and replace <code>"Python"</code> with <code>"APIs"</code>.</p>
+</div>
+</div>
+</section>
+<section id="collections-and-indexing" class="level3" data-number="B.3.5">
+<h3 data-number="B.3.5" class="anchored" data-anchor-id="collections-and-indexing"><span class="header-section-number">B.3.5</span> Collections and indexing</h3>
+<p>Python provides several built-in collection types. Lists are ordered and mutable, tuples are ordered and immutable, dictionaries map keys to values, and sets represent unordered collections of unique elements. Dictionaries are the most important of these for this book: a Python dictionary and a JSON object have the same shape, and tool arguments, API payloads, and configuration are all passed around as dictionaries.</p>
+<div id="7e49e1c2" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pair <span class="op">=</span> (<span class="dv">10</span>, <span class="dv">20</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>record <span class="op">=</span> {<span class="st">"name"</span>: <span class="st">"Alice"</span>, <span class="st">"age"</span>: <span class="dv">30</span>}</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>unique <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>}</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>values[<span class="dv">0</span>], pair[<span class="dv">1</span>], record[<span class="st">"name"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The dictionary method <code>.get(key, default)</code> looks up a key without raising an exception when it is missing, which is safer than <code>[key]</code> for data whose shape is not fully guaranteed — a common situation when the dictionary came from a retrieved document or an API response.</p>
+<div id="d763cb58" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>record.get(<span class="st">"email"</span>, <span class="st">"not provided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Sets do not support positional indexing. Membership tests express the most common access pattern.</p>
+<div id="266df15a" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="kw">in</span> {<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise: list indexing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create a list that contains all even numbers from 2 to 20 and print the seventh element.</p>
+</div>
+</div>
+</section>
+<section id="unpacking-with-and" class="level3" data-number="B.3.6">
+<h3 data-number="B.3.6" class="anchored" data-anchor-id="unpacking-with-and"><span class="header-section-number">B.3.6</span> Unpacking with <code>*</code> and <code>**</code></h3>
+<p>The <code>**</code> operator spreads a dictionary’s entries as keyword arguments at a function call. This single idiom is how every tool-calling example in this book turns a parsed JSON object into an ordinary function call: an LLM’s tool call arrives as a JSON string, <code>json.loads</code> turns it into a dictionary, and <code>**</code> turns that dictionary into the keyword arguments the underlying Python function expects.</p>
+<div id="454f5a16" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_numbers(x, y):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">+</span> y</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>args <span class="op">=</span> {<span class="st">"x"</span>: <span class="dv">13</span>, <span class="st">"y"</span>: <span class="dv">29</span>}</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>add_numbers(<span class="op">**</span>args)   <span class="co"># identical to add_numbers(x=13, y=29)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The single <code>*</code> operator does the same for a list or tuple, spreading its elements as positional arguments. Both operators also work in the other direction, inside a function <em>definition</em>: <code>*args</code> collects any extra positional arguments into a tuple, and <code>**kwargs</code> collects any extra keyword arguments into a dictionary. This is what lets a decorator’s wrapper function, shown below, accept and forward arguments for a function it has never seen.</p>
+<div id="10472e4c" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> describe(<span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> args, kwargs</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>describe(<span class="dv">1</span>, <span class="dv">2</span>, city<span class="op">=</span><span class="st">"Berlin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="comprehensions" class="level3" data-number="B.3.7">
+<h3 data-number="B.3.7" class="anchored" data-anchor-id="comprehensions"><span class="header-section-number">B.3.7</span> Comprehensions</h3>
+<p>A comprehension builds a new list, dictionary, or set from an existing iterable in a single expression, instead of appending to an empty collection inside an explicit loop. This book uses list comprehensions routinely, for instance to pull one field out of a list of records returned by an API or a retrieval step.</p>
+<div id="35081fcd" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> [<span class="st">"alpha"</span>, <span class="st">"beta"</span>, <span class="st">"gamma"</span>, <span class="st">"delta"</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>lengths <span class="op">=</span> [<span class="bu">len</span>(w) <span class="cf">for</span> w <span class="kw">in</span> words]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>long_words <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> <span class="bu">len</span>(w) <span class="op">&gt;</span> <span class="dv">4</span>]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>lengths, long_words</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A comprehension is a direct replacement for the equivalent <code>for</code> loop below — more compact, but expressing exactly the same computation.</p>
+<div id="52319851" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>long_words <span class="op">=</span> []</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w <span class="kw">in</span> words:</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(w) <span class="op">&gt;</span> <span class="dv">4</span>:</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        long_words.append(w)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>long_words</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="control-structures" class="level2" data-number="B.4">
+<h2 data-number="B.4" class="anchored" data-anchor-id="control-structures"><span class="header-section-number">B.4</span> Control structures</h2>
+<p>Conditional statements select code paths based on Boolean expressions. The <code>if</code> / <code>elif</code> / <code>else</code> chain evaluates conditions in order and executes the first matching block.</p>
+<div id="77919212" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">10</span>:</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> <span class="st">"greater than 10"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> x <span class="op">==</span> <span class="dv">10</span>:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> <span class="st">"equal to 10"</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> <span class="st">"less than 10"</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>label</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Loops perform repeated execution. A <code>for</code> loop iterates over items in an iterable. A <code>while</code> loop repeats while a condition holds. Termination conditions must be explicit to avoid infinite loops — a concern that reappears in the agent flow chapter, where an agent loop’s stopping condition plays exactly this role.</p>
+<div id="a630fc40" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fruits <span class="op">=</span> [<span class="st">"Apple"</span>, <span class="st">"Banana"</span>, <span class="st">"Cherry"</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fruit <span class="kw">in</span> fruits:</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(fruit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Two built-ins extend the plain <code>for</code> loop and appear throughout this book’s plotting and data-preparation code. <code>enumerate</code> yields each item together with its position, avoiding a manually maintained counter; <code>zip</code> steps through two or more iterables in parallel, pairing up their elements.</p>
+<div id="55e2738c" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> [<span class="st">"alpha"</span>, <span class="st">"beta"</span>, <span class="st">"gamma"</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, word <span class="kw">in</span> <span class="bu">enumerate</span>(words):</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i, word)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>lengths <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word, length <span class="kw">in</span> <span class="bu">zip</span>(words, lengths):</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>length<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="069482b4" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> count <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(count)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    count <span class="op">+=</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise: conditional statements
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Read an integer temperature in degrees Celsius from <code>input()</code> and print one of four labels: <code>"very cold"</code> (below 0), <code>"cold"</code> (0 to 15), <code>"pleasant"</code> (16 to 25), and <code>"hot"</code> (above 25).</p>
+<div id="f9c90de4" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Temperature (°C): "</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise: loops (FizzBuzz)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Iterate from 1 to 20. Print <code>"Fizz"</code> for multiples of 3, <code>"Buzz"</code> for multiples of 5, <code>"FizzBuzz"</code> for multiples of both, and the number otherwise.</p>
+</div>
+</div>
+</section>
+<section id="functions-and-modules" class="level2" data-number="B.5">
+<h2 data-number="B.5" class="anchored" data-anchor-id="functions-and-modules"><span class="header-section-number">B.5</span> Functions and modules</h2>
+<p>Functions package reusable behavior behind a stable interface. Parameters declare inputs, and <code>return</code> provides a result. If no explicit return statement is present, the function returns <code>None</code>.</p>
+<div id="9afb6091" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add(x, y):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">+</span> y</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>add(<span class="dv">3</span>, <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Docstrings attach structured documentation to objects. They can be accessed programmatically and extracted by documentation tools. In this book, a function’s docstring frequently doubles as the natural-language description an LLM sees when the function is exposed as a tool.</p>
+<div id="4a812383" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_area(width: <span class="bu">float</span>, height: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Compute the area of a rectangle."""</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> width <span class="op">*</span> height</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>compute_area.__doc__</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A lambda is a small, unnamed function defined inline, typically passed as an argument to another function — for instance, as the sort key below.</p>
+<div id="dd98ab3e" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> [{<span class="st">"name"</span>: <span class="st">"Bob"</span>, <span class="st">"age"</span>: <span class="dv">30</span>}, {<span class="st">"name"</span>: <span class="st">"Anna"</span>, <span class="st">"age"</span>: <span class="dv">23</span>}]</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>records_by_age <span class="op">=</span> <span class="bu">sorted</span>(records, key<span class="op">=</span><span class="kw">lambda</span> r: r[<span class="st">"age"</span>])</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>records_by_age</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Modules package functions, classes, and constants into importable units. The standard library provides functionality for common tasks such as mathematical computations, file I/O, and structured data processing.</p>
+<div id="e407bd1b" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>math.sqrt(<span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="decorators" class="level3" data-number="B.5.1">
+<h3 data-number="B.5.1" class="anchored" data-anchor-id="decorators"><span class="header-section-number">B.5.1</span> Decorators</h3>
+<p>A decorator is a function that wraps another function or method to add behavior without changing its body — logging, registration, or, as in the examples below, exposing a plain function as a web endpoint or as a tool an agent can call. <code>@app.post(...)</code> and <code>@mcp.tool(...)</code>, both used elsewhere in this book, are decorators in exactly this sense: the decorated function is unchanged Python, but the decorator registers it with a framework.</p>
+<div id="7869f1e2" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_call(func):</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrapper(<span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"calling </span><span class="sc">{</span>func<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> func(<span class="op">*</span>args, <span class="op">**</span>kwargs)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="at">@log_call</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> greet(name):</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"Hello, </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>greet(<span class="st">"Alice"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A context manager, entered with <code>with</code>, pairs a setup and a teardown step, guaranteeing that the teardown runs even if the code inside raises an exception. <code>open()</code> is the canonical built-in example; a custom one is written with the <code>@contextmanager</code> decorator from <code>contextlib</code>.</p>
+<div id="58daafcb" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> contextlib <span class="im">import</span> contextmanager</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">@contextmanager</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> timer(label):</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> time</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> time.time()</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> start<span class="sc">:.3f}</span><span class="ss">s"</span>)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> timer(<span class="st">"work"</span>):</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="bu">sum</span>(<span class="bu">range</span>(<span class="dv">1_000_000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="a-note-on-async-and-await" class="level3" data-number="B.5.2">
+<h3 data-number="B.5.2" class="anchored" data-anchor-id="a-note-on-async-and-await"><span class="header-section-number">B.5.2</span> A note on <code>async</code> and <code>await</code></h3>
+<p>A function defined with <code>async def</code> is a coroutine: calling it does not run its body immediately but produces an awaitable object, which must itself be awaited (with <code>await</code>) inside another coroutine to actually execute and yield its result. The point is concurrency: while one coroutine is awaiting a slow operation such as a network call, the program can make progress on other work instead of blocking. <code>async with</code> pairs this with the context-manager pattern above, for a setup and teardown that themselves involve awaiting something — such as opening and closing a connection to a tool server.</p>
+<div id="e4e22b98" class="cell" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> asyncio</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> fetch_value():</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> asyncio.sleep(<span class="fl">0.1</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">42</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>asyncio.run(fetch_value())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This book uses <code>async</code>/<code>await</code> sparingly, in the MCP client and server examples of the tools chapter, where a tool call is naturally something to wait on. Elsewhere, functions are ordinary synchronous Python.</p>
+</section>
+</section>
+<section id="error-handling" class="level2" data-number="B.6">
+<h2 data-number="B.6" class="anchored" data-anchor-id="error-handling"><span class="header-section-number">B.6</span> Error handling</h2>
+<p>A <code>try</code> block runs code that may raise an exception; matching <code>except</code> clauses catch specific exception types and decide how to recover. <code>finally</code> runs regardless of whether an exception occurred, making it the right place for cleanup. This is the standard shape for anything that can fail for reasons outside the program’s control, most notably a network call to an external API.</p>
+<div id="4654f522" class="cell" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> safe_divide(a, b):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> a <span class="op">/</span> b</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"division attempted"</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>safe_divide(<span class="dv">10</span>, <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Catching a broad <code>Exception</code> hides bugs that a narrower <code>except</code> would surface; this book’s API-calling examples catch specific exceptions (a timeout, a connection error) rather than every possible failure, so that an unexpected bug does not silently disappear into an error handler meant for network conditions.</p>
+</section>
+<section id="classes-and-structured-data" class="level2" data-number="B.7">
+<h2 data-number="B.7" class="anchored" data-anchor-id="classes-and-structured-data"><span class="header-section-number">B.7</span> Classes and structured data</h2>
+<p>Classes define user-defined types. Instances encapsulate state (attributes) and behavior (methods). Object orientation in Python supports encapsulation, inheritance, and polymorphism as common mechanisms for organizing code.</p>
+<div id="7520ef6f" class="cell" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Person:</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, age):</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> age</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> greet(<span class="va">self</span>):</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"Hello, my name is </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>person <span class="op">=</span> Person(<span class="st">"Alice"</span>, <span class="dv">30</span>)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>person.greet()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Inheritance is expressed by defining a subclass that names its parent class. The <code>super()</code> helper delegates initialization and method resolution to parent classes.</p>
+<div id="0209e751" class="cell" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Vehicle:</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, maker, year):</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.maker <span class="op">=</span> maker</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.year <span class="op">=</span> year</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> drive(<span class="va">self</span>):</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>maker<span class="sc">}</span><span class="ss"> vehicle is driving"</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Car(Vehicle):</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, maker, year, seats):</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(maker, year)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.seats <span class="op">=</span> seats</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> drive(<span class="va">self</span>):</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>maker<span class="sc">}</span><span class="ss"> car is driving"</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>Car(<span class="st">"BMW"</span>, <span class="dv">2021</span>, <span class="dv">5</span>).drive()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="data-classes-and-pydantic-models" class="level3" data-number="B.7.1">
+<h3 data-number="B.7.1" class="anchored" data-anchor-id="data-classes-and-pydantic-models"><span class="header-section-number">B.7.1</span> Data classes and Pydantic models</h3>
+<p>A plain class written as above needs an explicit <code>__init__</code> for every attribute, which is repetitive for classes that only hold data. The <code>@dataclass</code> decorator generates that boilerplate from a list of typed attributes.</p>
+<div id="2210a01d" class="cell" data-execution_count="34">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ToolResult:</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    status: <span class="bu">str</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    value: <span class="bu">float</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>ToolResult(status<span class="op">=</span><span class="st">"ok"</span>, value<span class="op">=</span><span class="fl">42.0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Pydantic models go one step further: like a data class, a <code>BaseModel</code> subclass declares its fields with type hints, but it additionally validates values at construction time and can convert directly to and from JSON. This book uses Pydantic models to define the input and output shape of a web endpoint (the integration chapter) and, under the hood, to define tool argument schemas — the same declaration serves as documentation, as a runtime check, and as the schema an LLM is shown.</p>
+<div id="0c90167f" class="cell" data-execution_count="35">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TriageResult(BaseModel):</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    category: <span class="bu">str</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    confidence: <span class="bu">float</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    escalate: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> TriageResult(category<span class="op">=</span><span class="st">"refund"</span>, confidence<span class="op">=</span><span class="fl">0.87</span>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>result.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If a field is given a value of the wrong type, Pydantic raises a validation error immediately rather than allowing a malformed object to propagate further into the program — the same guarantee a tool schema is meant to provide for an LLM’s arguments.</p>
+</section>
+</section>
+<section id="working-with-json" class="level2" data-number="B.8">
+<h2 data-number="B.8" class="anchored" data-anchor-id="working-with-json"><span class="header-section-number">B.8</span> Working with JSON</h2>
+<p>JavaScript Object Notation (JSON) is a text-based format for serializing structured values: JSON objects encode key-value mappings, JSON arrays encode ordered lists, and values are limited to numbers, strings, Booleans, <code>null</code>, arrays, and other objects. JSON has no dedicated syntax for anything else — no dates, no sets, no custom classes — which is part of why it is a safe interchange format between systems that do not share a type system.</p>
+<p>In Python, the structural match is exact: a JSON object is a dictionary, a JSON array is a list, and <code>null</code> is <code>None</code>. This correspondence is why JSON shows up constantly in this book, in tool call arguments, API request and response bodies, and configuration files — in each case, the JSON on the wire and the Python dictionary in memory are the same data, just at different stages of being read or written.</p>
+<div id="55db43d9" class="cell" data-execution_count="36">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>payload <span class="op">=</span> {</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"name"</span>: <span class="st">"Alice"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"age"</span>: <span class="dv">25</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tags"</span>: [<span class="st">"premium"</span>, <span class="st">"beta-tester"</span>],</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"address"</span>: <span class="va">None</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> json.dumps(payload)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>text</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>json.dumps</code> converts a Python object to a JSON string; <code>json.loads</code> does the reverse. Round-tripping a value through both functions reproduces the original dictionary — the basis for testing that a tool call’s arguments or an API’s response were parsed correctly.</p>
+<div id="bb119701" class="cell" data-execution_count="37">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>roundtrip <span class="op">=</span> json.loads(text)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>roundtrip <span class="op">==</span> payload</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>json.dumps(..., indent=2)</code> produces the pretty-printed, multi-line form used for readability in this book’s own listings; without <code>indent</code>, the same call produces a single compact line suited for sending over a network.</p>
+<div id="eb451dbb" class="cell" data-execution_count="38">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(json.dumps(payload, indent<span class="op">=</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nesting follows the same rules recursively: a value inside a JSON object can itself be an object or an array, which is how a single tool call argument or API response can carry an entire structured record rather than one flat value.</p>
+<div id="a384cf6a" class="cell" data-execution_count="39">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>tool_call <span class="op">=</span> {</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"name"</span>: <span class="st">"get_weather"</span>,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"arguments"</span>: {</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"city"</span>: <span class="st">"Berlin"</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"unit"</span>: <span class="st">"celsius"</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"forecast_days"</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>json.loads(json.dumps(tool_call))[<span class="st">"arguments"</span>][<span class="st">"city"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise: JSON round-trip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Build a Python dictionary describing a book (title, author, and a list of chapter titles). Serialize it with <code>json.dumps</code>, parse it back with <code>json.loads</code>, and confirm the parsed chapter list has the same length as the original.</p>
+</div>
+</div>
+</section>
+<section id="calling-web-apis-from-python" class="level2" data-number="B.9">
+<h2 data-number="B.9" class="anchored" data-anchor-id="calling-web-apis-from-python"><span class="header-section-number">B.9</span> Calling web APIs from Python</h2>
+<p>An Application Programming Interface (API) specifies how software components interact. A web API is an API accessed over a network, typically by sending HTTP requests to endpoints and receiving responses that contain status information and a JSON payload — the OpenAI, Azure, and other model-provider calls used throughout this book are all web APIs in this sense. <a href="#fig-api-request-response" class="quarto-xref">Figure&nbsp;<span>B.1</span></a> summarizes the exchange: a client constructs a request with a method, a URL, and headers; a server validates the request, performs application logic, and returns a response with a status code and a body.</p>
+<div id="fig-api-request-response" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagram. A client sends a request containing a method, URL, headers, and an optional body to a server. The server validates the request, applies application logic, and returns a response carrying a status code and a body.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-api-request-response-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../img/api-request-response-v2.svg" class="img-fluid figure-img" style="width:85.0%" alt="Diagram. A client sends a request containing a method, URL, headers, and an optional body to a server. The server validates the request, applies application logic, and returns a response carrying a status code and a body.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-api-request-response-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;B.1: HTTP request and response exchange.
+</figcaption>
+</figure>
+</div>
+<p>The client-server model separates request initiation from request handling. Statelessness is a common design goal: a single request contains all the information required for the server to process it, rather than relying on server-side session state, which is part of what makes it possible to scale a service across many independent server processes.</p>
+<section id="http-methods-and-status-codes" class="level3" data-number="B.9.1">
+<h3 data-number="B.9.1" class="anchored" data-anchor-id="http-methods-and-status-codes"><span class="header-section-number">B.9.1</span> HTTP methods and status codes</h3>
+<p>HTTP methods determine the action performed on a resource. API designs often map method semantics to resource operations, but the mapping is a convention and not a guarantee. <a href="#tbl-http-methods" class="quarto-xref">Table&nbsp;<span>B.1</span></a> lists the methods with their safety and idempotency properties.</p>
+<div id="tbl-http-methods" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-http-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.1: HTTP method properties used in API design.
+</figcaption>
+<div aria-describedby="tbl-http-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: center;">Safe</th>
+<th style="text-align: center;">Idempotent</th>
+<th style="text-align: left;">Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>GET</code></td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">retrieve representation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>POST</code></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">create subordinate resource</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>PUT</code></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">replace resource state</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>PATCH</code></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">not required</td>
+<td style="text-align: left;">partial update</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>DELETE</code></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">delete resource</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Safe methods are intended not to change server state; <code>GET</code> is the primary safe method. Idempotency describes whether repeating a request yields the same effect as sending it once — relevant when a client must decide whether it is safe to retry a failed call.</p>
+<p>HTTP status codes describe the outcome of a request and are grouped by their first digit. <a href="#tbl-http-status-codes" class="quarto-xref">Table&nbsp;<span>B.2</span></a> gives the groups and the codes an API client meets most often.</p>
+<div id="tbl-http-status-codes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-http-status-codes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.2: Frequently encountered status codes in API clients.
+</figcaption>
+<div aria-describedby="tbl-http-status-codes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Code</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Typical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">200</td>
+<td style="text-align: left;">OK</td>
+<td style="text-align: left;">request succeeded</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">201</td>
+<td style="text-align: left;">Created</td>
+<td style="text-align: left;">resource created</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">204</td>
+<td style="text-align: left;">No Content</td>
+<td style="text-align: left;">success without body</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">400</td>
+<td style="text-align: left;">Bad Request</td>
+<td style="text-align: left;">invalid request</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">401</td>
+<td style="text-align: left;">Unauthorized</td>
+<td style="text-align: left;">authentication missing</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">403</td>
+<td style="text-align: left;">Forbidden</td>
+<td style="text-align: left;">insufficient permissions</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">404</td>
+<td style="text-align: left;">Not Found</td>
+<td style="text-align: left;">resource missing</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">409</td>
+<td style="text-align: left;">Conflict</td>
+<td style="text-align: left;">incompatible state</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">429</td>
+<td style="text-align: left;">Too Many Requests</td>
+<td style="text-align: left;">rate limit hit</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">500</td>
+<td style="text-align: left;">Internal Server Error</td>
+<td style="text-align: left;">server failure</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">503</td>
+<td style="text-align: left;">Service Unavailable</td>
+<td style="text-align: left;">temporary outage</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="urls-and-query-parameters" class="level3" data-number="B.9.2">
+<h3 data-number="B.9.2" class="anchored" data-anchor-id="urls-and-query-parameters"><span class="header-section-number">B.9.2</span> URLs and query parameters</h3>
+<p>A URL identifies a resource and can include additional parameters. Query parameters are appended after <code>?</code> and are commonly used for filtering, pagination, and field selection. <a href="#tbl-url-components" class="quarto-xref">Table&nbsp;<span>B.3</span></a> names each part of a URL and what it carries.</p>
+<div id="tbl-url-components" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-url-components-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.3: URL components in web APIs.
+</figcaption>
+<div aria-describedby="tbl-url-components-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">scheme</td>
+<td style="text-align: left;"><code>https</code></td>
+<td style="text-align: left;">transport and security</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">host</td>
+<td style="text-align: left;"><code>api.example.com</code></td>
+<td style="text-align: left;">service address</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">path</td>
+<td style="text-align: left;"><code>/v1/items/42</code></td>
+<td style="text-align: left;">resource selection</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">query</td>
+<td style="text-align: left;"><code>?limit=10&amp;offset=0</code></td>
+<td style="text-align: left;">parameterization</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="the-requests-library" class="level3" data-number="B.9.3">
+<h3 data-number="B.9.3" class="anchored" data-anchor-id="the-requests-library"><span class="header-section-number">B.9.3</span> The <code>requests</code> library</h3>
+<p>The <code>requests</code> library provides a high-level interface for sending HTTP requests and processing responses. Network calls should use explicit timeouts, since the default behavior may block indefinitely; an API that stops responding should not be allowed to stop the calling program along with it.</p>
+<div id="783b4c6d" class="cell" data-execution_count="40">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>base_url <span class="op">=</span> <span class="st">"https://jsonplaceholder.typicode.com"</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> requests.get(<span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}</span><span class="ss">/posts"</span>, params<span class="op">=</span>{<span class="st">"userId"</span>: <span class="dv">1</span>}, timeout<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>resp.status_code, resp.json()[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>params</code> handles query-string encoding; <code>json=payload</code> on a <code>POST</code> serializes a Python dictionary to a JSON body and sets the matching content-type header.</p>
+<div id="fb8cc58b" class="cell" data-execution_count="41">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>payload <span class="op">=</span> {<span class="st">"title"</span>: <span class="st">"foo"</span>, <span class="st">"body"</span>: <span class="st">"bar"</span>, <span class="st">"userId"</span>: <span class="dv">1</span>}</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> requests.post(<span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}</span><span class="ss">/posts"</span>, json<span class="op">=</span>payload, timeout<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>resp.status_code, resp.json()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Repeated calls to the same service should reuse a <code>requests.Session()</code>, which maintains connection pooling and shared configuration such as default headers across calls — the same pattern used implicitly by the <code>OpenAI</code> client throughout this book.</p>
+<div id="f8d9d967" class="cell" data-execution_count="42">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>sess <span class="op">=</span> requests.Session()</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>sess.headers.update({<span class="st">"Accept"</span>: <span class="st">"application/json"</span>})</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> sess.get(<span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}</span><span class="ss">/posts"</span>, timeout<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>resp.status_code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>API clients should treat network failures and error responses as normal operating conditions, not exceptional ones. <code>raise_for_status()</code> turns an error status code into a Python exception, which can then be caught alongside timeout and connection errors.</p>
+<div id="83f70030" class="cell" data-execution_count="43">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    resp <span class="op">=</span> requests.get(<span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}</span><span class="ss">/posts"</span>, timeout<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    resp.raise_for_status()</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> requests.Timeout:</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"timeout"</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> requests.RequestException <span class="im">as</span> exc:</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"request failed: </span><span class="sc">{</span>exc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">len</span>(resp.json()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Retry logic is appropriate for transient conditions such as timeouts and temporary server failures, but retrying a non-idempotent request (a <code>POST</code>) can create duplicate side effects unless the endpoint supports an idempotency key. Rate limiting is typically signaled by status <code>429</code>, often with a <code>Retry-After</code> header indicating how long to back off before trying again.</p>
+</section>
+<section id="authentication-and-secrets" class="level3" data-number="B.9.4">
+<h3 data-number="B.9.4" class="anchored" data-anchor-id="authentication-and-secrets"><span class="header-section-number">B.9.4</span> Authentication and secrets</h3>
+<p>Authentication controls access to protected resources. A bearer token is the most common mechanism used by the APIs in this book, sent via the <code>Authorization</code> header.</p>
+<div id="86a96e2a" class="cell" data-execution_count="44">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>token <span class="op">=</span> <span class="st">"REDACTED"</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {<span class="st">"Authorization"</span>: <span class="ss">f"Bearer </span><span class="sc">{</span>token<span class="sc">}</span><span class="ss">"</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Credentials and API keys must never be embedded in source code. The standard pattern loads them from environment variables, with <code>python-dotenv</code> populating those variables from a local <code>.env</code> file that is excluded from version control — the setup used by every API-calling listing in this book.</p>
+<div id="bbab5421" class="cell" data-execution_count="45">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>api_key <span class="op">=</span> os.getenv(<span class="st">"API_KEY"</span>)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>api_key <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Configuration via environment variables keeps credentials out of the repository and lets different environments (a laptop, a CI pipeline, a production server) use different values without any code change.</p>
+</section>
+<section id="pagination" class="level3" data-number="B.9.5">
+<h3 data-number="B.9.5" class="anchored" data-anchor-id="pagination"><span class="header-section-number">B.9.5</span> Pagination</h3>
+<p>Collection endpoints frequently return lists and support pagination to bound response size. Offset-based pagination uses <code>limit</code> and <code>offset</code> parameters; cursor-based pagination returns an opaque token that must be supplied to fetch the next page, which stays stable even if items are inserted or removed between requests. <a href="#tbl-pagination" class="quarto-xref">Table&nbsp;<span>B.4</span></a> compares the two schemes.</p>
+<div id="tbl-pagination" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pagination-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;B.4: Common pagination schemes in web APIs.
+</figcaption>
+<div aria-describedby="tbl-pagination-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pagination</th>
+<th style="text-align: left;">Client parameters</th>
+<th style="text-align: left;">Server response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">offset</td>
+<td style="text-align: left;"><code>limit</code>, <code>offset</code></td>
+<td style="text-align: left;">list</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cursor</td>
+<td style="text-align: left;"><code>limit</code>, <code>cursor</code></td>
+<td style="text-align: left;">list + cursor</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="building-apis-in-python" class="level2" data-number="B.10">
+<h2 data-number="B.10" class="anchored" data-anchor-id="building-apis-in-python"><span class="header-section-number">B.10</span> Building APIs in Python</h2>
+<p>Web frameworks such as FastAPI implement server-side routing, validation, and serialization for JSON-based APIs, the framework behind the endpoint examples in the integration chapter. FastAPI builds on ASGI and integrates OpenAPI documentation generation automatically. A Pydantic model, introduced above, specifies the expected request body; FastAPI validates incoming JSON against it before the function body ever runs.</p>
+<div id="9e1d0d81" class="cell" data-execution_count="46">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> FastAPI()</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Item(BaseModel):</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    price: <span class="bu">float</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="at">@app.post</span>(<span class="st">"/items"</span>)</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> create_item(item: Item):</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> item</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A local test client executes requests against the application in the same process, without a network round trip, which is what makes an API endpoint straightforward to test alongside the rest of a codebase.</p>
+<div id="10444a10" class="cell" data-execution_count="47">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi.testclient <span class="im">import</span> TestClient</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> TestClient(app)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> client.post(<span class="st">"/items"</span>, json<span class="op">=</span>{<span class="st">"name"</span>: <span class="st">"widget"</span>, <span class="st">"price"</span>: <span class="fl">9.99</span>})</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>resp.status_code, resp.json()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise: Petstore API
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the Petstore API hosted at <code>petstore.swagger.io</code> to practice <code>GET</code> and <code>POST</code> requests. Retrieve the pet with ID <code>1</code>, then create a new pet by sending a JSON body to the <code>/v2/pet</code> endpoint and retrieve the created resource again.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../appendices/a-setup.html" class="pagination-link" aria-label="Python Setup">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Python Setup</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../appendices/c-deeplearning.html" class="pagination-link" aria-label="Deep learning">
+        <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Deep learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2026, Michael Bücker and Michael Hewing</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

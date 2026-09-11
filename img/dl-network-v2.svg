@@ -1,0 +1,65 @@
+<svg viewBox="0 0 780 360" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>The topology of a small multilayer perceptron</title>
+<desc>An input layer of 10 units connects every unit to every unit of a hidden layer of 64 units with a ReLU activation, which connects every unit to a single output unit. Only a representative subset of units and connections is drawn.</desc>
+<rect width="780" height="360" fill="#ffffff"/>
+
+<!-- Connections drawn first, thin and muted: the pattern (fully connected), not any single weight, is what matters here -->
+<g stroke="#c4d7e8" stroke-width="1">
+<line x1="100" y1="60" x2="400" y2="40"/>
+<line x1="100" y1="60" x2="400" y2="95"/>
+<line x1="100" y1="60" x2="400" y2="150"/>
+<line x1="100" y1="60" x2="400" y2="205"/>
+<line x1="100" y1="60" x2="400" y2="260"/>
+
+<line x1="100" y1="120" x2="400" y2="40"/>
+<line x1="100" y1="120" x2="400" y2="95"/>
+<line x1="100" y1="120" x2="400" y2="150"/>
+<line x1="100" y1="120" x2="400" y2="205"/>
+<line x1="100" y1="120" x2="400" y2="260"/>
+
+<line x1="100" y1="180" x2="400" y2="40"/>
+<line x1="100" y1="180" x2="400" y2="95"/>
+<line x1="100" y1="180" x2="400" y2="150"/>
+<line x1="100" y1="180" x2="400" y2="205"/>
+<line x1="100" y1="180" x2="400" y2="260"/>
+
+<line x1="100" y1="240" x2="400" y2="40"/>
+<line x1="100" y1="240" x2="400" y2="95"/>
+<line x1="100" y1="240" x2="400" y2="150"/>
+<line x1="100" y1="240" x2="400" y2="205"/>
+<line x1="100" y1="240" x2="400" y2="260"/>
+
+<line x1="400" y1="40" x2="650" y2="150"/>
+<line x1="400" y1="95" x2="650" y2="150"/>
+<line x1="400" y1="150" x2="650" y2="150"/>
+<line x1="400" y1="205" x2="650" y2="150"/>
+<line x1="400" y1="260" x2="650" y2="150"/>
+</g>
+
+<!-- Input layer: 4 of 10 units drawn -->
+<circle cx="100" cy="60" r="18" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<circle cx="100" cy="120" r="18" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<circle cx="100" cy="180" r="18" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<circle cx="100" cy="240" r="18" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="100" y="278" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#557591" text-anchor="middle">&#8942;</text>
+
+<!-- Hidden layer: 5 of 64 units drawn -->
+<circle cx="400" cy="40" r="18" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<circle cx="400" cy="95" r="18" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<circle cx="400" cy="150" r="18" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<circle cx="400" cy="205" r="18" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<circle cx="400" cy="260" r="18" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="400" y="298" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#557591" text-anchor="middle">&#8942;</text>
+
+<!-- Output layer: the hero, a single unit -->
+<circle cx="650" cy="150" r="26" fill="#1d4e89"/>
+<text x="650" y="157" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#ffffff" font-weight="700" text-anchor="middle">y</text>
+
+<!-- Layer captions, aligned on one baseline -->
+<text x="100" y="330" font-family="Helvetica, Arial, sans-serif" font-size="14.5" fill="#1d4e89" font-weight="700" text-anchor="middle">input (10)</text>
+<text x="400" y="330" font-family="Helvetica, Arial, sans-serif" font-size="14.5" fill="#1d4e89" font-weight="700" text-anchor="middle">hidden (64), ReLU</text>
+<text x="650" y="330" font-family="Helvetica, Arial, sans-serif" font-size="14.5" fill="#1d4e89" font-weight="700" text-anchor="middle">output (1)</text>
+
+<text x="100" y="20" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#557591" font-style="italic" text-anchor="middle">nn.Linear(10, 64)</text>
+<text x="525" y="20" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#557591" font-style="italic" text-anchor="middle">nn.Linear(64, 1)</text>
+</svg>

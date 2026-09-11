@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Appendix C — Deep learning – AI Agents — Appendices</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../appendices/b-python.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-efa4ae438396d7ce58f0c12de823036a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/a-setup.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/c-deeplearning.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Deep learning</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">AI Agents — Appendices</a> 
+        <div class="sidebar-tools-main">
+    <a href="../appendices.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/a-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Python Setup</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/b-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python and API basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/c-deeplearning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Deep learning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#vectors-matrices-and-softmax" id="toc-vectors-matrices-and-softmax" class="nav-link active" data-scroll-target="#vectors-matrices-and-softmax"><span class="header-section-number">C.1</span> Vectors, matrices, and softmax</a></li>
+  <li><a href="#machine-learning-problem-setup" id="toc-machine-learning-problem-setup" class="nav-link" data-scroll-target="#machine-learning-problem-setup"><span class="header-section-number">C.2</span> Machine learning problem setup</a></li>
+  <li><a href="#artificial-neural-networks" id="toc-artificial-neural-networks" class="nav-link" data-scroll-target="#artificial-neural-networks"><span class="header-section-number">C.3</span> Artificial neural networks</a>
+  <ul class="collapse">
+  <li><a href="#loss-functions-and-outputs" id="toc-loss-functions-and-outputs" class="nav-link" data-scroll-target="#loss-functions-and-outputs"><span class="header-section-number">C.3.1</span> Loss functions and outputs</a></li>
+  <li><a href="#backpropagation-and-gradient-computation" id="toc-backpropagation-and-gradient-computation" class="nav-link" data-scroll-target="#backpropagation-and-gradient-computation"><span class="header-section-number">C.3.2</span> Backpropagation and gradient computation</a></li>
+  </ul></li>
+  <li><a href="#optimization-and-training-dynamics" id="toc-optimization-and-training-dynamics" class="nav-link" data-scroll-target="#optimization-and-training-dynamics"><span class="header-section-number">C.4</span> Optimization and training dynamics</a></li>
+  <li><a href="#regularization-and-generalization-controls" id="toc-regularization-and-generalization-controls" class="nav-link" data-scroll-target="#regularization-and-generalization-controls"><span class="header-section-number">C.5</span> Regularization and generalization controls</a></li>
+  <li><a href="#neural-network-architectures" id="toc-neural-network-architectures" class="nav-link" data-scroll-target="#neural-network-architectures"><span class="header-section-number">C.6</span> Neural network architectures</a></li>
+  <li><a href="#practical-training-workflow" id="toc-practical-training-workflow" class="nav-link" data-scroll-target="#practical-training-workflow"><span class="header-section-number">C.7</span> Practical training workflow</a></li>
+  <li><a href="#common-failure-modes" id="toc-common-failure-modes" class="nav-link" data-scroll-target="#common-failure-modes"><span class="header-section-number">C.8</span> Common failure modes</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/a-setup.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/c-deeplearning.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Deep learning</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-deep-learning" class="quarto-section-identifier">Appendix C — Deep learning</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Deep learning refers to machine learning models built from compositions of differentiable functions that are trained by gradient-based optimization. The practical relevance for agentic systems lies in two roles: deep learning as the foundation for Large Language Models (LLMs), and deep learning components as learned modules inside larger pipelines that combine probabilistic inference with deterministic tools. This appendix starts one level below that: the vector and matrix operations that every layer, loss, and attention computation in this book is built from, but that the models chapter uses without pausing to define.</p>
+<section id="vectors-matrices-and-softmax" class="level2" data-number="C.1">
+<h2 data-number="C.1" class="anchored" data-anchor-id="vectors-matrices-and-softmax"><span class="header-section-number">C.1</span> Vectors, matrices, and softmax</h2>
+<p>A vector is simply an ordered list of numbers. An embedding, as used throughout the models chapter, is a vector; so is a single training example’s set of numeric features. Vectors of the same length can be combined element by element, most importantly through the dot product: multiply corresponding entries and sum the results.</p>
+<div id="4d55b8f8" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="fl">4.0</span>, <span class="fl">5.0</span>, <span class="fl">6.0</span>])</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>np.dot(a, b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>np.float64(32.0)</code></pre>
+</div>
+</div>
+<p>The dot product is the computational core of cosine similarity, defined and used in the models chapter to compare embedding vectors — that formula divides a dot product by the two vectors’ magnitudes, but the dot product itself is exactly the sum computed above.</p>
+<p>A matrix is a rectangular array of numbers, and a matrix-vector product generalizes the dot product: each row of the matrix is dotted with the input vector, producing one output number per row. This is precisely what a neural network layer computes. <code>nn.Linear(10, 64)</code>, used below, stores a <span class="math inline">\(64 \times 10\)</span> weight matrix <span class="math inline">\(W\)</span> and a bias vector <span class="math inline">\(b\)</span>, and maps an input vector <span class="math inline">\(x\)</span> to <span class="math inline">\(Wx + b\)</span> — sixty-four dot products, one per output dimension, computed in a single operation. <a href="#fig-dl-matrix-vector" class="quarto-xref">Figure&nbsp;<span>C.1</span></a> shows this for a smaller, concrete example: the first row of <span class="math inline">\(W\)</span> is highlighted and traced through to the first output entry, since that entry is nothing more than that row’s dot product with <span class="math inline">\(x\)</span> — the same operation as the cosine-similarity numerator above, repeated once per row.</p>
+<div id="fig-dl-matrix-vector" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagram of a 2-by-3 weight matrix multiplying a 3-dimensional input vector to give a 2-dimensional output, with the first row highlighted and traced to the first output entry to show that each output is the dot product of a row with the input.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-matrix-vector-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../img/dl-matrix-vector-product-v2.svg" class="img-fluid figure-img" style="width:85.0%" alt="Diagram of a 2-by-3 weight matrix multiplying a 3-dimensional input vector to give a 2-dimensional output, with the first row highlighted and traced to the first output entry to show that each output is the dot product of a row with the input.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-matrix-vector-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;C.1: Matrix-vector product. Each output entry is the dot product of one row of the matrix with the input vector; the highlighted first row is traced explicitly.
+</figcaption>
+</figure>
+</div>
+<div id="1c89ff43" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> np.array([[<span class="fl">0.2</span>, <span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.4</span>], [<span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="op">-</span><span class="fl">0.2</span>]])   <span class="co"># 2x3 weight matrix</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>])                         <span class="co"># 3-dim input</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>W <span class="op">@</span> x                                                 <span class="co"># 2-dim output</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>array([1.2, 0.5])</code></pre>
+</div>
+</div>
+<p>Real training never processes one input at a time. Stacking several input vectors as the rows of a matrix <span class="math inline">\(X\)</span> and computing <span class="math inline">\(XW^\top\)</span> applies the same matrix-vector product to every row at once — a matrix-matrix product is simply a batch of matrix-vector products, computed together. The training loop later in this appendix creates <code>x = torch.randn(32, 10)</code>, a batch of 32 examples, for exactly this reason: the <code>32</code> is the batch dimension this operation processes in parallel.</p>
+<div id="85ff3aa4" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array([[<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>], [<span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="op">-</span><span class="fl">1.0</span>]])   <span class="co"># a batch of 2 inputs</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">@</span> W.T                                              <span class="co"># 2x2 output: one row per input</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>array([[ 1.2,  0.5],
+       [-0.5,  0.5]])</code></pre>
+</div>
+</div>
+<p>The first row of <code>X</code> is exactly the <code>x</code> used above, and its output row reproduces the earlier result — batching changes nothing about what gets computed per example, only how many examples are computed at once.</p>
+<p>Softmax turns a vector of arbitrary real-valued scores into a probability distribution: it exponentiates every entry, then divides by the sum, so the results are all positive and add up to 1. The models chapter uses exactly this operation twice — to turn a language model’s output scores into a distribution over the next token, and to turn attention scores into weights over which positions to attend to.</p>
+<div id="c301143c" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax(scores):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    exp_scores <span class="op">=</span> np.exp(scores <span class="op">-</span> np.<span class="bu">max</span>(scores))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> exp_scores <span class="op">/</span> exp_scores.<span class="bu">sum</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> np.array([<span class="fl">2.0</span>, <span class="fl">1.0</span>, <span class="fl">0.1</span>])</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> softmax(scores)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>probs, probs.<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(array([0.65900114, 0.24243297, 0.09856589]), np.float64(1.0))</code></pre>
+</div>
+</div>
+<p>Subtracting the maximum score before exponentiating is a numerical safeguard: it keeps every exponent at or below zero, which avoids floating-point overflow, without changing the result, since the same constant appears in every term of the numerator and denominator. This is a different fix for a related problem to the scaling used in the models chapter’s attention computation, which divides dot products by <span class="math inline">\(\sqrt{d_k}\)</span> <em>before</em> the softmax to keep the scores themselves from growing too large as embedding dimensionality increases — but both exist because softmax output is sensitive to the scale of its input.</p>
+<p>Once scores become probabilities, cross-entropy loss (introduced below) measures how far that distribution is from the true answer: for a true class <span class="math inline">\(c\)</span>, cross-entropy is simply <span class="math inline">\(-\log(\text{probs}[c])\)</span> — a small value when the model assigned high probability to the correct class, and a large one when it did not.</p>
+<div id="9a4317bd" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>true_class <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>np.log(probs[true_class])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>np.float64(0.4170300162778335)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise: softmax by hand
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compute <code>softmax(np.array([1.0, 1.0, 1.0]))</code> and confirm all three probabilities are equal. Then compute <code>softmax(np.array([10.0, 1.0, 1.0]))</code> and observe how concentrated the distribution becomes on the largest score. What does this predict about a language model that is very confident in its next token compared to one that is uncertain among several candidates?</p>
+</div>
+</div>
+</section>
+<section id="machine-learning-problem-setup" class="level2" data-number="C.2">
+<h2 data-number="C.2" class="anchored" data-anchor-id="machine-learning-problem-setup"><span class="header-section-number">C.2</span> Machine learning problem setup</h2>
+<p>Machine Learning problems are commonly framed as the minimization of an expected loss. A dataset provides examples <span class="math inline">\((x, y)\)</span> drawn from an unknown distribution, and a model <span class="math inline">\(f_\theta\)</span> parameterized by <span class="math inline">\(\theta\)</span> predicts <span class="math inline">\(\hat{y} =
+f_\theta(x)\)</span>. Training selects parameters that minimize an empirical objective, typically an average loss over a training set.</p>
+<p>Supervised learning uses labeled targets <span class="math inline">\(y\)</span>. Unsupervised learning uses objectives that do not require explicit targets, such as reconstruction or contrastive learning. Reinforcement Learning optimizes policies based on reward signals and environmental interaction.</p>
+<p>Generalization denotes performance on unseen data. Overfitting occurs when a model fits idiosyncrasies of the training set and fails to generalize, while underfitting occurs when the model class cannot capture relevant structure.</p>
+</section>
+<section id="artificial-neural-networks" class="level2" data-number="C.3">
+<h2 data-number="C.3" class="anchored" data-anchor-id="artificial-neural-networks"><span class="header-section-number">C.3</span> Artificial neural networks</h2>
+<p>An artificial neural network is a parameterized function that maps inputs to outputs through layers. A layer applies an affine transformation — the matrix-vector product <span class="math inline">\(Wx + b\)</span> introduced above — followed by a nonlinear activation. A multilayer perceptron (MLP) composes such layers to produce increasingly abstract representations. <a href="#fig-dl-neuron" class="quarto-xref">Figure&nbsp;<span>C.2</span></a> shows a single unit performing exactly this computation: each input is multiplied by its own weight, the weighted inputs and a bias are summed — one row of <span class="math inline">\(W\)</span> dotted with <span class="math inline">\(x\)</span>, as in <a href="#fig-dl-matrix-vector" class="quarto-xref">Figure&nbsp;<span>C.1</span></a> — and the sum passes through a nonlinear activation, here a ReLU, which simply replaces any negative value with zero.</p>
+<div id="fig-dl-neuron" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagram. Three inputs, each multiplied by a weight, are summed together with a bias, and the sum is passed through a nonlinear activation function (ReLU) to produce the neuron's output.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-neuron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../img/dl-neuron-v2.svg" class="img-fluid figure-img" style="width:80.0%" alt="Diagram. Three inputs, each multiplied by a weight, are summed together with a bias, and the sum is passed through a nonlinear activation function (ReLU) to produce the neuron's output.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-neuron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;C.2: A single artificial neuron: a weighted sum of its inputs, plus a bias, passed through a nonlinear activation.
+</figcaption>
+</figure>
+</div>
+<div id="14ca41ba" class="cell" data-execution_count="6">
+<div id="lst-dl-mlp" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-dl-mlp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;C.1: A minimal multilayer perceptron defined with PyTorch’s <code>nn.Sequential</code>
+</figcaption>
+<div aria-describedby="lst-dl-mlp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> nn.Sequential(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">10</span>, <span class="dv">64</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">64</span>, <span class="dv">1</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>model</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>Sequential(
+  (0): Linear(in_features=10, out_features=64, bias=True)
+  (1): ReLU()
+  (2): Linear(in_features=64, out_features=1, bias=True)
+)</code></pre>
+</div>
+</div>
+<p><a href="#lst-dl-mlp" class="quarto-xref">Listing&nbsp;<span>C.1</span></a> stacks many such units into two fully connected layers: an input of 10 values maps to a hidden layer of 64 units with a ReLU activation each, which maps to a single output unit. <a href="#fig-dl-network" class="quarto-xref">Figure&nbsp;<span>C.3</span></a> draws this topology directly — a representative subset of the input and hidden units, since drawing all 10 and all 64 would be unreadable, but every connection shown is a real weight the network learns.</p>
+<div id="fig-dl-network" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagram. An input layer of 10 units connects every unit to every unit of a hidden layer of 64 units with a ReLU activation, which connects every unit to a single output unit. Only a representative subset of units and connections is drawn.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../img/dl-network-v2.svg" class="img-fluid figure-img" style="width:95.0%" alt="Diagram. An input layer of 10 units connects every unit to every unit of a hidden layer of 64 units with a ReLU activation, which connects every unit to a single output unit. Only a representative subset of units and connections is drawn.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;C.3: The topology of the multilayer perceptron defined in <a href="#lst-dl-mlp" class="quarto-xref">Listing&nbsp;<span>C.1</span></a>. Only a representative subset of the 10 input units and 64 hidden units is drawn; the output unit is the single value the network predicts.
+</figcaption>
+</figure>
+</div>
+<p>Forward computation and parameter updates form a repeated cycle, shown in <a href="#fig-dl-forward-backward" class="quarto-xref">Figure&nbsp;<span>C.4</span></a>.</p>
+<div id="fig-dl-forward-backward" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagram. Inputs flow forward through a parameterized model to produce predictions, which are compared to targets by a loss function. Backpropagation then computes gradients of the loss with respect to the parameters and flows backward to update them.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-forward-backward-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../img/dl-forward-backward-v2.svg" class="img-fluid figure-img" style="width:90.0%" alt="Diagram. Inputs flow forward through a parameterized model to produce predictions, which are compared to targets by a loss function. Backpropagation then computes gradients of the loss with respect to the parameters and flows backward to update them.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-forward-backward-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;C.4: Forward and backward pass in gradient-based training. Inputs flow forward through the model to a prediction and a loss; backpropagation then flows the loss’s gradient backward to update the parameters.
+</figcaption>
+</figure>
+</div>
+<section id="loss-functions-and-outputs" class="level3" data-number="C.3.1">
+<h3 data-number="C.3.1" class="anchored" data-anchor-id="loss-functions-and-outputs"><span class="header-section-number">C.3.1</span> Loss functions and outputs</h3>
+<p>The loss function defines the learning signal. Mean squared error is common for regression. Cross-entropy is common for classification, and pairs naturally with the softmax introduced above: cross-entropy compares a predicted probability distribution to the true one, so a classifier’s output layer typically produces logits that a softmax (often fused into the loss for numerical stability) turns into that distribution.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">task</th>
+<th style="text-align: left;">typical output</th>
+<th style="text-align: left;">typical loss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">regression</td>
+<td style="text-align: left;">linear output</td>
+<td style="text-align: left;">mean squared error</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">binary classification</td>
+<td style="text-align: left;">logit</td>
+<td style="text-align: left;">logistic loss</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">multi-class classification</td>
+<td style="text-align: left;">logits</td>
+<td style="text-align: left;">cross-entropy</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="backpropagation-and-gradient-computation" class="level3" data-number="C.3.2">
+<h3 data-number="C.3.2" class="anchored" data-anchor-id="backpropagation-and-gradient-computation"><span class="header-section-number">C.3.2</span> Backpropagation and gradient computation</h3>
+<p>Backpropagation computes gradients of the loss with respect to parameters efficiently by applying the chain rule to the computational graph — the backward arc in <a href="#fig-dl-forward-backward" class="quarto-xref">Figure&nbsp;<span>C.4</span></a>. Modern deep learning frameworks implement automatic differentiation, which provides gradients for arbitrary compositions of differentiable operations, including the matrix multiplications and softmax introduced above. The method is the standard training mechanism for deep networks in practice, with early formulations and analyses described in <span class="citation" data-cites="rumelhart1986learning">Rumelhart et al. (<a href="#ref-rumelhart1986learning" role="doc-biblioref">1986</a>)</span>.</p>
+<p>The chain rule itself is nothing more than multiplying local derivatives along a computational path. Take the simplest possible unit — a single weight and bias, <span class="math inline">\(\hat{y} = wx + b\)</span> — with a squared-error loss <span class="math inline">\(L = (\hat{y} - y)^2\)</span>. The chain rule gives the gradient of <span class="math inline">\(L\)</span> with respect to each parameter by differentiating through <span class="math inline">\(\hat{y}\)</span>: <span class="math display">\[
+\frac{\partial L}{\partial w} = \frac{\partial L}{\partial \hat{y}}
+\cdot \frac{\partial \hat{y}}{\partial w} = 2(\hat{y}-y) \cdot x,
+\qquad
+\frac{\partial L}{\partial b} = \frac{\partial L}{\partial \hat{y}}
+\cdot \frac{\partial \hat{y}}{\partial b} = 2(\hat{y}-y).
+\]</span> With <span class="math inline">\(w=1\)</span>, <span class="math inline">\(b=0\)</span>, <span class="math inline">\(x=2\)</span>, and a target <span class="math inline">\(y=5\)</span>: <span class="math inline">\(\hat{y}=2\)</span>, <span class="math inline">\(\partial L/\partial w = 2(2-5)(2) = -12\)</span>, and <span class="math inline">\(\partial L/\partial b =
+2(2-5) = -6\)</span>. <code>loss.backward()</code> computes exactly this, via automatic differentiation rather than by hand, and should agree with the hand calculation to the last digit. <a href="#lst-dl-backprop-check" class="quarto-xref">Listing&nbsp;<span>C.2</span></a> runs the comparison.</p>
+<div id="b8e942d9" class="cell" data-execution_count="7">
+<div id="lst-dl-backprop-check" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-dl-backprop-check-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;C.2: Checking a hand-derived gradient against PyTorch’s autograd
+</figcaption>
+<div aria-describedby="lst-dl-backprop-check-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> torch.tensor(<span class="fl">1.0</span>, requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> torch.tensor(<span class="fl">0.0</span>, requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>x_ <span class="op">=</span> torch.tensor(<span class="fl">2.0</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> torch.tensor(<span class="fl">5.0</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>y_hat <span class="op">=</span> w <span class="op">*</span> x_ <span class="op">+</span> b</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> (y_hat <span class="op">-</span> target) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>loss.backward()</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>w.grad, b.grad</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>(tensor(-12.), tensor(-6.))</code></pre>
+</div>
+</div>
+<p>Every parameter in a network as large as an LLM is updated by the same mechanism: a longer chain of local derivatives, multiplied together, computed automatically instead of by hand — nothing about the underlying rule changes with scale.</p>
+</section>
+</section>
+<section id="optimization-and-training-dynamics" class="level2" data-number="C.4">
+<h2 data-number="C.4" class="anchored" data-anchor-id="optimization-and-training-dynamics"><span class="header-section-number">C.4</span> Optimization and training dynamics</h2>
+<p>Gradient descent updates parameters by moving opposite to the gradient of the loss: <span class="math display">\[
+\theta \leftarrow \theta - \eta \nabla_\theta L(\theta),
+\]</span> where <span class="math inline">\(\eta\)</span> is the learning rate and <span class="math inline">\(\nabla_\theta L(\theta)\)</span> is the gradient computed by backpropagation — for the toy neuron above, this is literally <code>w = w - lr * w.grad</code> applied to every parameter at once. Stochastic gradient descent (SGD) approximates the gradient with minibatches of samples — the batches introduced earlier in this appendix — which reduces computation per update and introduces noise that can affect convergence and generalization.</p>
+<p>The learning rate controls the update magnitude. Adaptive optimizers such as Adam maintain per-parameter step sizes based on moment estimates and are widely used in practice <span class="citation" data-cites="kingma2015adam">Kingma and Ba (<a href="#ref-kingma2015adam" role="doc-biblioref">2015</a>)</span>. <a href="#lst-dl-training-loop" class="quarto-xref">Listing&nbsp;<span>C.3</span></a> runs the update cycle from <a href="#fig-dl-forward-backward" class="quarto-xref">Figure&nbsp;<span>C.4</span></a> for real, eight times in a row, on a fixed batch of synthetic data — the loss printed after every step should decrease.</p>
+<div id="2f593edc" class="cell" data-execution_count="8">
+<div id="lst-dl-training-loop" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-dl-training-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;C.3: A minimal training loop: repeated gradient updates on synthetic data
+</figcaption>
+<div aria-describedby="lst-dl-training-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">32</span>, <span class="dv">10</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.randn(<span class="dv">32</span>, <span class="dv">1</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> nn.Sequential(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">10</span>, <span class="dv">64</span>),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">64</span>, <span class="dv">1</span>),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> nn.MSELoss()</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span><span class="fl">1e-2</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">8</span>):</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    opt.zero_grad()</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> model(x)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(pred, y)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    opt.step()</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"step </span><span class="sc">{</span>step<span class="sc">}</span><span class="ss">: loss = </span><span class="sc">{</span>loss<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>step 0: loss = 1.9334
+step 1: loss = 1.7661
+step 2: loss = 1.6382
+step 3: loss = 1.5352
+step 4: loss = 1.4425
+step 5: loss = 1.3545
+step 6: loss = 1.2699
+step 7: loss = 1.1895</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise: breaking the training loop
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Rerun <a href="#lst-dl-training-loop" class="quarto-xref">Listing&nbsp;<span>C.3</span></a> with <code>lr=5.0</code> instead of <code>1e-2</code>, keeping everything else the same. What happens to the printed loss? Then try a very small learning rate such as <code>1e-5</code> over more steps. Relate what you see to why the learning rate is often called the single most consequential hyperparameter in training.</p>
+</div>
+</div>
+</section>
+<section id="regularization-and-generalization-controls" class="level2" data-number="C.5">
+<h2 data-number="C.5" class="anchored" data-anchor-id="regularization-and-generalization-controls"><span class="header-section-number">C.5</span> Regularization and generalization controls</h2>
+<p>Regularization constrains the effective capacity of the model or stabilizes learning. Weight decay penalizes large parameters and is often implemented as <span class="math inline">\(L_2\)</span> regularization. Dropout randomly masks activations during training to reduce co-adaptation <span class="citation" data-cites="srivastava2014dropout">Srivastava et al. (<a href="#ref-srivastava2014dropout" role="doc-biblioref">2014</a>)</span>. Batch normalization normalizes intermediate activations to reduce internal covariate shift and improve optimization <span class="citation" data-cites="ioffe2015batchnorm">Ioffe and Szegedy (<a href="#ref-ioffe2015batchnorm" role="doc-biblioref">2015</a>)</span>.</p>
+<p>Data augmentation is a complementary approach that expands the training distribution by applying label-preserving transformations, particularly in vision.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Evaluation requires a strict separation between training, validation, and test sets. Data leakage can produce optimistic performance estimates that do not transfer to deployment settings.</p>
+</div>
+</div>
+</section>
+<section id="neural-network-architectures" class="level2" data-number="C.6">
+<h2 data-number="C.6" class="anchored" data-anchor-id="neural-network-architectures"><span class="header-section-number">C.6</span> Neural network architectures</h2>
+<p>Architecture choices encode inductive biases that match input structure. The models chapter traces the historical progression from n-gram models through recurrent networks to Transformers; this section stays with the training-mechanics angle — what each family asks of the gradient-descent machinery introduced above.</p>
+<p>Convolutional neural networks (CNNs) exploit spatial locality in grid-structured data such as images, through convolution and pooling layers; they became dominant for image classification after large-scale empirical results such as <span class="citation" data-cites="krizhevsky2012imagenet">Krizhevsky et al. (<a href="#ref-krizhevsky2012imagenet" role="doc-biblioref">2012</a>)</span>, with deep residual networks addressing optimization issues in very deep CNN architectures through skip connections <span class="citation" data-cites="he2016resnet">He et al. (<a href="#ref-he2016resnet" role="doc-biblioref">2016</a>)</span>. Neither vision nor CNNs are otherwise a topic in this book.</p>
+<p>Recurrent neural networks (RNNs) model sequential structure by carrying a hidden state forward across positions, updating it one token at a time. Backpropagation through this recurrence tends to make gradients vanish or explode over long sequences; Long Short-Term Memory (LSTM) units use learned gates to mitigate the problem and support longer-range dependencies <span class="citation" data-cites="hochreiter1997long">Hochreiter and Schmidhuber (<a href="#ref-hochreiter1997long" role="doc-biblioref">1997</a>)</span>. RNNs and LSTMs are trained with the exact same loss-gradient-update cycle as the MLP above, just unrolled across sequence positions, and were the dominant architecture for language modeling before attention.</p>
+<p>Transformers replace recurrent state with self-attention, and self-attention is built entirely from the operations introduced at the start of this appendix: queries and keys are compared with dot products, the results are scaled and passed through softmax to obtain attention weights, and those weights combine the values — the mechanism worked through in full in the models chapter, including causal masking and multi-head attention. What matters for this appendix is that none of that changes the training mechanics: a Transformer’s parameters are still updated by backpropagation and gradient descent exactly as in <a href="#lst-dl-training-loop" class="quarto-xref">Listing&nbsp;<span>C.3</span></a>, at a much larger scale. The self-attention formulation was introduced in <span class="citation" data-cites="vaswani2017attention">Vaswani et al. (<a href="#ref-vaswani2017attention" role="doc-biblioref">2017</a>)</span> and underpins essentially every model discussed in this book.</p>
+</section>
+<section id="practical-training-workflow" class="level2" data-number="C.7">
+<h2 data-number="C.7" class="anchored" data-anchor-id="practical-training-workflow"><span class="header-section-number">C.7</span> Practical training workflow</h2>
+<p>Training is typically organized around a data pipeline, a model, an objective, an optimizer, and an evaluation protocol. Several choices materially affect reproducibility and comparability across runs:</p>
+<ul>
+<li>dataset splits and preprocessing</li>
+<li>parameter initialization and random seeds</li>
+<li>optimizer and learning-rate schedule</li>
+<li>early stopping criteria</li>
+<li>metric definitions and reporting</li>
+</ul>
+<p>Checkpointing stores model parameters periodically. It supports failure recovery and enables model selection based on validation metrics. Mixed precision training can reduce memory usage and increase throughput on modern accelerators, but it may require numerical safeguards such as loss scaling.</p>
+</section>
+<section id="common-failure-modes" class="level2" data-number="C.8">
+<h2 data-number="C.8" class="anchored" data-anchor-id="common-failure-modes"><span class="header-section-number">C.8</span> Common failure modes</h2>
+<p>Training instabilities include exploding gradients, divergent loss due to an overly large learning rate — as seen in the exercise above — and sensitivity to initialization. Non-stationary data distributions, mislabeled data, and distribution shift between training and deployment often dominate model performance limitations in applied settings.</p>
+<p>The general treatment of deep learning foundations, architectures, and optimization is provided in <span class="citation" data-cites="goodfellow2016deep">Goodfellow et al. (<a href="#ref-goodfellow2016deep" role="doc-biblioref">2016</a>)</span>, while statistical learning perspectives on generalization and evaluation appear in <span class="citation" data-cites="bishop2006pattern">Bishop (<a href="#ref-bishop2006pattern" role="doc-biblioref">2006</a>)</span>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-bishop2006pattern" class="csl-entry" role="listitem">
+Bishop, Christopher M. 2006. <em>Pattern Recognition and Machine Learning</em>. Springer. <a href="https://link.springer.com/book/9780387310732">https://link.springer.com/book/9780387310732</a>.
+</div>
+<div id="ref-goodfellow2016deep" class="csl-entry" role="listitem">
+Goodfellow, Ian, Yoshua Bengio, and Aaron Courville. 2016. <em>Deep Learning</em>. MIT Press. <a href="https://mitpress.mit.edu/9780262035613/deep-learning/">https://mitpress.mit.edu/9780262035613/deep-learning/</a>.
+</div>
+<div id="ref-he2016resnet" class="csl-entry" role="listitem">
+He, Kaiming, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. 2016. <span>“Deep Residual Learning for Image Recognition.”</span> <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</em>. <a href="https://doi.org/10.1109/CVPR.2016.90">https://doi.org/10.1109/CVPR.2016.90</a>.
+</div>
+<div id="ref-hochreiter1997long" class="csl-entry" role="listitem">
+Hochreiter, Sepp, and Jürgen Schmidhuber. 1997. <span>“Long Short-Term Memory.”</span> <em>Neural Computation</em> 9 (8): 1735–80. <a href="https://doi.org/10.1162/neco.1997.9.8.1735">https://doi.org/10.1162/neco.1997.9.8.1735</a>.
+</div>
+<div id="ref-ioffe2015batchnorm" class="csl-entry" role="listitem">
+Ioffe, Sergey, and Christian Szegedy. 2015. <span>“Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift.”</span> <em>Proceedings of the 32nd International Conference on Machine Learning (ICML)</em>. <a href="https://proceedings.mlr.press/v37/ioffe15">https://proceedings.mlr.press/v37/ioffe15</a>.
+</div>
+<div id="ref-kingma2015adam" class="csl-entry" role="listitem">
+Kingma, Diederik P., and Jimmy Ba. 2015. <span>“Adam: A Method for Stochastic Optimization.”</span> <em>International Conference on Learning Representations (ICLR)</em>. <a href="https://doi.org/10.48550/arXiv.1412.6980">https://doi.org/10.48550/arXiv.1412.6980</a>.
+</div>
+<div id="ref-krizhevsky2012imagenet" class="csl-entry" role="listitem">
+Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E. Hinton. 2012. <span>“ImageNet Classification with Deep Convolutional Neural Networks.”</span> <em>Advances in Neural Information Processing Systems (NeurIPS)</em>. <a href="https://proceedings.neurips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html">https://proceedings.neurips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html</a>.
+</div>
+<div id="ref-rumelhart1986learning" class="csl-entry" role="listitem">
+Rumelhart, David E., Geoffrey E. Hinton, and Ronald J. Williams. 1986. <span>“Learning Representations by Back-Propagating Errors.”</span> <em>Nature</em> 323 (6088): 533–36. <a href="https://doi.org/10.1038/323533a0">https://doi.org/10.1038/323533a0</a>.
+</div>
+<div id="ref-srivastava2014dropout" class="csl-entry" role="listitem">
+Srivastava, Nitish, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. 2014. <span>“Dropout: A Simple Way to Prevent Neural Networks from Overfitting.”</span> <em>Journal of Machine Learning Research</em> 15 (56): 1929–58. <a href="https://jmlr.org/papers/v15/srivastava14a.html">https://jmlr.org/papers/v15/srivastava14a.html</a>.
+</div>
+<div id="ref-vaswani2017attention" class="csl-entry" role="listitem">
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, et al. 2017. <span>“Attention Is All You Need.”</span> <em>Proceedings of the 31st International Conference on Neural Information Processing Systems</em> (Red Hook, NY, USA), NIPS’17, 6000–6010. <a href="https://doi.org/10.48550/arXiv.1706.03762">https://doi.org/10.48550/arXiv.1706.03762</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../appendices/b-python.html" class="pagination-link" aria-label="Python and API basics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python and API basics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2026, Michael Bücker and Michael Hewing</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

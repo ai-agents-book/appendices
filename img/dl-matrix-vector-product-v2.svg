@@ -1,0 +1,55 @@
+<svg viewBox="0 0 720 350" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Matrix-vector product</title>
+<desc>A 2-by-3 weight matrix W multiplies a 3-dimensional input vector x to produce a 2-dimensional output. The first row of W is highlighted and traced with an arrow to the first output entry, showing that each output entry is the dot product of one row of W with x.</desc>
+<defs>
+<marker id="arrow-dl-mv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#557591"/>
+</marker>
+</defs>
+<rect width="720" height="350" fill="#ffffff"/>
+
+<!-- Traced arrow: row 1 of W dotted with x produces the first output entry -->
+<path d="M 310 170 C 362 68 568 68 592 170" fill="none" stroke="#557591" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-dl-mv)"/>
+<text x="452" y="58" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#557591" font-style="italic" text-anchor="middle">row 1 &#183; x</text>
+
+<!-- W: 2x3 matrix, row 1 highlighted (traced explicitly), row 2 default -->
+<rect x="40" y="140" width="90" height="60" fill="#dceaf7" stroke="#1d4e89" stroke-width="2.5"/>
+<text x="85" y="176" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" font-weight="700" text-anchor="middle">0.2</text>
+<rect x="130" y="140" width="90" height="60" fill="#dceaf7" stroke="#1d4e89" stroke-width="2.5"/>
+<text x="175" y="176" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" font-weight="700" text-anchor="middle">-0.1</text>
+<rect x="220" y="140" width="90" height="60" fill="#dceaf7" stroke="#1d4e89" stroke-width="2.5"/>
+<text x="265" y="176" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" font-weight="700" text-anchor="middle">0.4</text>
+
+<rect x="40" y="200" width="90" height="60" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="85" y="236" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" text-anchor="middle">0.5</text>
+<rect x="130" y="200" width="90" height="60" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="175" y="236" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" text-anchor="middle">0.3</text>
+<rect x="220" y="200" width="90" height="60" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="265" y="236" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" text-anchor="middle">-0.2</text>
+
+<text x="175" y="315" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" font-weight="700" text-anchor="middle">W</text>
+
+<!-- multiplication symbol -->
+<text x="352" y="208" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="#1d4e89" text-anchor="middle">&#215;</text>
+
+<!-- x: 3x1 vector -->
+<rect x="400" y="110" width="80" height="60" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="440" y="146" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" text-anchor="middle">1.0</text>
+<rect x="400" y="170" width="80" height="60" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="440" y="206" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" text-anchor="middle">2.0</text>
+<rect x="400" y="230" width="80" height="60" fill="#dceaf7" stroke="#1d4e89" stroke-width="1.5"/>
+<text x="440" y="266" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" text-anchor="middle">3.0</text>
+
+<text x="440" y="315" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" font-weight="700" text-anchor="middle">x</text>
+
+<!-- equals symbol -->
+<text x="537" y="208" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="#1d4e89" text-anchor="middle">=</text>
+
+<!-- output: 2x1 vector, the hero result -->
+<rect x="590" y="140" width="90" height="60" fill="#1d4e89"/>
+<text x="635" y="176" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#ffffff" font-weight="700" text-anchor="middle">1.2</text>
+<rect x="590" y="200" width="90" height="60" fill="#1d4e89"/>
+<text x="635" y="236" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#ffffff" font-weight="700" text-anchor="middle">0.5</text>
+
+<text x="635" y="315" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d4e89" font-weight="700" text-anchor="middle">W x</text>
+</svg>
