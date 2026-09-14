@@ -329,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="api-keys-and-environment-variables" class="level2" data-number="A.6">
 <h2 data-number="A.6" class="anchored" data-anchor-id="api-keys-and-environment-variables"><span class="header-section-number">A.6</span> API Keys and Environment Variables</h2>
-<p>The LLM examples throughout this book call a chat completions API through the standard <code>openai</code> Python package. This client interface is not tied to a single vendor: the same method calls work against OpenAI directly, Azure OpenAI, or any other provider that implements the OpenAI-compatible API standard, so you are not restricted to the exact setup used while writing the book. The code as printed is configured against Azure OpenAI, and the web-search example in the tools chapter additionally calls Serper.dev. You must provide your own credentials for whichever provider you use.</p>
+<p>The LLM examples throughout this book call a chat completions API through the standard <code>openai</code> Python package. This client interface is not tied to a single vendor: the same method calls work against OpenAI directly, against a self-hosted model server, and against any other provider implementing the OpenAI-compatible API standard, so you are not restricted to the exact setup used while writing the book. The code as printed constructs the client with no arguments and takes its configuration from the environment, so the same listings address whichever endpoint you point them at. The web-search example in the tools chapter additionally calls Serper.dev. You must provide your own credentials for whichever provider you use.</p>
 <p>We <strong>never</strong> hard-code keys into the code. Instead, we read them from environment variables, typically loaded from a local <code>.env</code> file.</p>
 <section id="step-1-create-a-.env-file" class="level3" data-number="A.6.1">
 <h3 data-number="A.6.1" class="anchored" data-anchor-id="step-1-create-a-.env-file"><span class="header-section-number">A.6.1</span> Step 1: Create a <code>.env</code> File</h3>
@@ -339,7 +339,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="va">CHAT_MODEL</span><span class="op">=</span><span class="st">"..."</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="va">EMBED_MODEL</span><span class="op">=</span><span class="st">"..."</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="va">SERPER_API_KEY</span><span class="op">=</span><span class="st">"..."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The listings deliberately carry no default model, so the book never pins a choice that providers retire on their own schedule. Set <code>CHAT_MODEL</code> and <code>EMBED_MODEL</code> to identifiers your provider actually serves; naming schemes differ between OpenAI, Azure OpenAI, and third-party compatible services even for the same underlying model. <code>OPENAI_BASE_URL</code> is needed only when you call something other than OpenAI itself, such as a self-hosted model server or a gateway placed in front of one.</p>
+<p>The listings deliberately carry no default model, so the book never pins a choice that providers retire on their own schedule. Set <code>CHAT_MODEL</code> and <code>EMBED_MODEL</code> to identifiers your provider actually serves; naming schemes differ from one provider to the next even for the same underlying model. <code>OPENAI_BASE_URL</code> is needed only when you call something other than OpenAI itself, such as a self-hosted model server or a gateway placed in front of one.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -350,7 +350,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The outputs shown throughout this book were generated with GPT-4o, served through Azure OpenAI. A different model will word its answers differently and may make different tool-calling choices; what should carry over is the structure of each result, not its exact phrasing. Where an example depends on a specific capability rather than on wording, the text says so.</p>
+<p>The outputs shown throughout this book were generated with GPT-4o. A different model will word its answers differently and may make different tool-calling choices; what should carry over is the structure of each result, not its exact phrasing. Where an example depends on a specific capability rather than on wording, the text says so.</p>
 </div>
 </div>
 <p>The <code>.env</code> file stays on your machine and is <strong>ignored by Git</strong>, so your credentials are not accidentally published.</p>
@@ -358,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-2-loading-environment-variables-in-python" class="level3" data-number="A.6.2">
 <h3 data-number="A.6.2" class="anchored" data-anchor-id="step-2-loading-environment-variables-in-python"><span class="header-section-number">A.6.2</span> Step 2: Loading Environment Variables in Python</h3>
 <p>The examples use the <code>python-dotenv</code> package to load environment variables. This is the client construction exactly as the chapters print it:</p>
-<div id="028ca572" class="cell" data-execution_count="1">
+<div id="2145336d" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
@@ -377,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="A.6.3" class="anchored" data-anchor-id="using-azure-openai"><span class="header-section-number">A.6.3</span> Using Azure OpenAI</h3>
 <p>Organizations frequently permit Azure OpenAI and nothing else. Azure addresses deployments rather than models and pins an API version, so it needs a different client class — but everything past client construction (tool schemas, message handling, the tool-calling loop) stays identical, because it relies only on the standard chat completions interface.</p>
 <p>Replace the client construction above with:</p>
-<div id="06c081ab" class="cell" data-execution_count="2">
+<div id="e6644594" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> AzureOpenAI</span>
