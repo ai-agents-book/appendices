@@ -3,8 +3,8 @@
 The appendices to *AI Agents: Designing, Orchestrating, and Governing
 LLM-Based Systems* by Michael Bücker and Michael Hewing.
 
-**Read them at <https://ai-agents-book.github.io/appendices/>**, or download
-[`appendices.pdf`](https://ai-agents-book.github.io/appendices/appendices.pdf).
+**Read them at <https://aiagentsbook.org/appendices/>**, or download
+[`appendices.pdf`](https://aiagentsbook.org/appendices/appendices.pdf).
 
 ## What is here
 
