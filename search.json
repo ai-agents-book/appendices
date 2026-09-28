@@ -36,7 +36,7 @@
     "href": "appendices/a-setup.html#getting-the-example-code",
     "title": "Appendix A — Python Setup",
     "section": "A.2 Getting the Example Code",
-    "text": "A.2 Getting the Example Code\nAll code used in this book is available in a public Git repository.\ngit clone https://github.com/ai-agents-book/code.git\ncd code\nIn the remainder of this appendix, we assume that your current working directory is this project folder.",
+    "text": "A.2 Getting the Example Code\nAll code used in this book is available in a public Git repository at https://github.com/ai-agents-book/code.\ngit clone https://github.com/ai-agents-book/code\ncd code\nIn the remainder of this appendix, we assume that your current working directory is this project folder.",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Python Setup</span>"
